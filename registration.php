@@ -31,16 +31,18 @@
         }
         else {
     ?>
-            <div class="box">
-                <h1>Registrazione</h1>
-                <form name="registration" action="" method="post">
-                    <input type="text" name="username" placeholder="Username" required /><br>
-                    <input type="email" name="email" placeholder="Email" required /><br>
-                    <input type="password" name="password" placeholder="Password" required /><br><br>
-                    <button type="submit" name="submit">Registrati</button>
-                </form>
-                <p>Sei già registrato? Effettua il <a href="login.php">login</a>!</p>
-            </div>
+            <section class="retroBox">
+                <div class="wrapper">
+                    <h1>Registrazione</h1>
+                    <form name="registration" action="" method="post">
+                        <input type="text" name="username" placeholder="Username" required /><br>
+                        <input type="email" name="email" placeholder="Email" required /><br>
+                        <input type="password" name="password" placeholder="Password" required /><br><br>
+                        <button type="submit" name="submit" class="retroButton">Registrati</button>
+                    </form>
+                    <p>Sei già registrato? Effettua il <a href="login.php">login</a>!</p>
+                </div>
+            </section>
     <?php } ?>
     </body>
 </html>

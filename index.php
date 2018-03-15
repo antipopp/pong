@@ -10,12 +10,18 @@
 		<link rel="stylesheet" href="css/style.css" />
 	</head>
 	<body>
-		<header><h1>PONG!</h1></header>
+		<header><h1>PONG</h1></header>
 		<nav>
-			<button href="logout.php" class="navItem">Logout</button>
-			<button href="#" class="navItem">Classifica</button>
+			<ul>
+				<li><a href="logout.php" class="retroButton">Logout</a></li>
+				<li><a href="#" class="retroButton">Classifica</a></li>
+			</ul>
 		</nav>
-		<section class="game"><canvas id="gameCanvas" width="800" height="600"></canvas></section>
+		<section class="retroBox">
+			<div class="wrapper gameContainer">
+				<canvas id="gameCanvas" width="800" height="600"></canvas>
+			</div>
+		</section>
 
 		<script src="js/game.js"></script>
 	</body>

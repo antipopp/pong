@@ -38,17 +38,17 @@
     	}
     	else { 
 	?>
-
-			<div class="box">
-				<h1>Login</h1>
-				<form action="" method="post" name="login">
-					<input type="text" name="username" placeholder="Username" required /><br>
-					<input type="password" name="password" placeholder="Password" required /><br><br>
-					<button name="submit" type="submit">Login</button>
-				</form>
-				<p>Non ti sei ancora registrato? <a href='registration.php'>Fallo qui!</a></p>
-			</div>
-			
+			<section class="retroBox">
+				<div class="wrapper">
+					<h1>Login</h1>
+					<form action="" method="post" name="login">
+						<input type="text" name="username" placeholder="Username" required /><br>
+						<input type="password" name="password" placeholder="Password" required /><br><br>
+						<button name="submit" type="submit" class="retroButton">Login</button>
+					</form>
+					<p>Non ti sei ancora registrato? <a href='registration.php'>Fallo qui!</a></p>
+				</div>
+			</section>	
 	<?php } ?>
 </body>
 </html>

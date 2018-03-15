@@ -70,27 +70,29 @@ function moveEverything() {
 	ballX += ballSpeedX;
 	ballY += ballSpeedY;
 
-	if (ballX > canvas.width-PADDLE_THICK*3) {
+	// muro e racchetta di destra
+	if (ballX+20 > canvas.width-PADDLE_THICK) {
 		if (ballY > paddle2Y && ballY < paddle2Y+PADDLE_HEIGHT) {
 			ballSpeedX = -ballSpeedX;
 			
 		    var deltaY = ballY - (paddle2Y+PADDLE_HEIGHT/2);
 			ballSpeedY = deltaY * 0.35;
 		}	
-		else {
+		else if (ballX > canvas.width) {
 			playerScore1++; // il punteggio deve stare prima di ballReset() 
 			ballReset();
 		}
 	}
 
-	if (ballX < 0+PADDLE_THICK*3) {
+	// muro e racchetta di sinistra
+	if (ballX-20 < 0+PADDLE_THICK) {
 		if (ballY > paddle1Y && ballY < paddle1Y+PADDLE_HEIGHT) {
 			ballSpeedX = -ballSpeedX;
 
 			var deltaY = ballY - (paddle1Y+PADDLE_HEIGHT/2);
 			ballSpeedY = deltaY * 0.35;
 		}
-		else {
+		else if (ballX < 0) {
 			playerScore2++;
 			ballReset();
 		}
@@ -147,14 +149,19 @@ function drawEverything() {
 		
 		return;
 	}
+	// rendering degli elementi
 
 	drawNet();
+
 	// racchetta sinistra
 	colorRect(0,paddle1Y,PADDLE_THICK,PADDLE_HEIGHT, 'white');
+
 	// racchetta destra
 	colorRect(canvas.width-PADDLE_THICK,paddle2Y,PADDLE_THICK,PADDLE_HEIGHT, 'white');
+
 	// palla
 	colorCircle(ballX,ballY,10,'red'); 
+
 	// punteggio
 	canvasContext.fillStyle = 'white';
 	canvasContext.font = '30px Arial';
