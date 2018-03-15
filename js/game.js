@@ -49,7 +49,7 @@ window.onload = function() {
 
 	canvas.addEventListener('mousemove', function(evt) {
 		var mousePos = calculateMousePos(evt);
-		paddle1Y = mousePos.y-(PADDLE_HEIGHT/2);
+		paddle1Y = mousePos.y+PADDLE_HEIGHT;
 	});
 }
 
@@ -70,34 +70,39 @@ function moveEverything() {
 	ballX += ballSpeedX;
 	ballY += ballSpeedY;
 
-	// muro e racchetta di destra
+	// racchetta di destra
 	if (ballX+20 > canvas.width-PADDLE_THICK) {
-		if (ballY > paddle2Y && ballY < paddle2Y+PADDLE_HEIGHT) {
+		if (ballY+10 > paddle2Y && ballY+10 < paddle2Y+PADDLE_HEIGHT) {
 			ballSpeedX = -ballSpeedX;
 			
 		    var deltaY = ballY - (paddle2Y+PADDLE_HEIGHT/2);
 			ballSpeedY = deltaY * 0.35;
 		}	
-		else if (ballX > canvas.width) {
-			playerScore1++; // il punteggio deve stare prima di ballReset() 
-			ballReset();
-		}
 	}
 
-	// muro e racchetta di sinistra
+	// muro di destra
+	if (ballX > canvas.width) {
+		playerScore1++; // il punteggio deve stare prima di ballReset() 
+		ballReset();
+	}
+
+	// racchetta di sinistra
 	if (ballX-20 < 0+PADDLE_THICK) {
-		if (ballY > paddle1Y && ballY < paddle1Y+PADDLE_HEIGHT) {
+		if (ballY+10 > paddle1Y && ballY+10 < paddle1Y+PADDLE_HEIGHT) {
 			ballSpeedX = -ballSpeedX;
 
 			var deltaY = ballY - (paddle1Y+PADDLE_HEIGHT/2);
 			ballSpeedY = deltaY * 0.35;
 		}
-		else if (ballX < 0) {
-			playerScore2++;
-			ballReset();
-		}
 	}
 
+	// muro di sinistra
+	if (ballX < 0) {
+		playerScore2++;
+		ballReset();
+	}
+
+	// muri sopra e sotto
 	if (ballY > canvas.height) {
 		ballSpeedY = -ballSpeedY;
 	}
