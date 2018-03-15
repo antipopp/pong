@@ -72,7 +72,7 @@ function moveEverything() {
 
 	// racchetta di destra
 	if (ballX+20 > canvas.width-PADDLE_THICK) {
-		if (ballY+10 > paddle2Y && ballY+10 < paddle2Y+PADDLE_HEIGHT) {
+		if (ballY+10 > paddle2Y && ballY-10 < paddle2Y+PADDLE_HEIGHT) {
 			ballSpeedX = -ballSpeedX;
 			
 		    var deltaY = ballY - (paddle2Y+PADDLE_HEIGHT/2);
@@ -88,7 +88,7 @@ function moveEverything() {
 
 	// racchetta di sinistra
 	if (ballX-20 < 0+PADDLE_THICK) {
-		if (ballY+10 > paddle1Y && ballY+10 < paddle1Y+PADDLE_HEIGHT) {
+		if (ballY-10 > paddle1Y && ballY-10 < paddle1Y+PADDLE_HEIGHT) {
 			ballSpeedX = -ballSpeedX;
 
 			var deltaY = ballY - (paddle1Y+PADDLE_HEIGHT/2);
