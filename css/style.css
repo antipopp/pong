@@ -62,7 +62,7 @@ input:not([type='submit']) {
      background-color: #000;
 }
 
-.error p {
+.important p {
      color: red;
 }
 

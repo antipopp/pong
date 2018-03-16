@@ -9,13 +9,13 @@
 
 	$errorMessage = registration($username, $password, $cpassword, $email, $trn_date);
 	if($errorMessage === null)
-		header('location: index.php');
+		header('location: login.php?success=true');
 	else
 		header('location: registration.php?errorMessage=' . $errorMessage );
 	
 	// function per validazione email
 	function is_valid_email($email) {
-		// import variabile di connessione
+		// variabile di connessione al db
 		global $con;
 		if (empty($email)) {
 			return "Email obbligatoria";
@@ -66,8 +66,8 @@
 		}
 	}
 
+	// esecuzione
 	function registration($username, $password, $cpassword, $email, $trn_date) {
-		// esecuzione
 		if ($username != null && $password != null){
 			if (is_valid_email($email) === null) {
 				if (is_valid_passwords($password,$cpassword) === null) {
