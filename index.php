@@ -16,7 +16,7 @@
 					session_start();
 					if(!isset($_SESSION["userId"])) {
 						echo '<li><a href="login.php" class="retroButton">Login</a></li>';
-						echo '<li><a href="registrazione.php" class="retroButton">Registrazione</a></li>';
+						echo '<li><a href="registration.php" class="retroButton">Registrazione</a></li>';
 					}
 					else {
 						echo '<li><a href="logout.php" class="retroButton">Logout</a></li>';
