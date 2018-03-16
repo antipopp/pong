@@ -13,7 +13,7 @@
                 <h1>Registrazione</h1>
                 <form name="registration" action="checks.php" method="POST">
                     <input type="text" name="username" placeholder="Username" /><br>
-                    <input type="email" name="email" placeholder="Email" /><br>
+                    <input type="text" name="email" placeholder="Email" /><br>
                     <input type="password" name="password" placeholder="Password" /><br>
                     <input type="password" name="cpassword" placeholder="Conferma password" /><br><br>
                     <?php

@@ -1,21 +1,29 @@
 <?php
 
-	include 'db.php';
-	global $msg;
+	require_once 'db.php';
+	$username = $_POST['username'];
+	$email = $_POST['email'];
+	$password = $_POST['password'];
+	$cpassword = $_POST['cpassword'];
+	$trn_date = date("Y-m-d H:i:s");
+
+	$errorMessage = registration($username, $password, $cpassword, $email, $trn_date);
+	if($errorMessage === null)
+		header('location: index.php');
+	else
+		header('location: registration.php?errorMessage=' . $errorMessage );
 	
 	// function per validazione email
 	function is_valid_email($email) {
 		// import variabile di connessione
 		global $con;
 		if (empty($email)) {
-			echo "Email is required.";
-			return false;
+			return "Email obbligatoria";
 		}
 		else {
 			// check formattazioene email
 			if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-			$msg = "Formato email non valido";
-			return false;
+				return "Formato email non valido";
 			}
 		}
 
@@ -23,26 +31,22 @@
 		$slQuery = "SELECT 1 FROM users WHERE email = '$email'";
 		$selectResult = mysqli_query($con,$slQuery);
 		if (mysqli_num_rows($selectResult)>0) {
-			$msg = "Email già registrata";
-			return false;
+			return "Email già registrata";
 		}
 
-		return true;
+		return null;
 	}
 
 	// function conferma password
 	function is_valid_passwords($pass,$confirmpass) {
 		if (empty($pass)) {
-			echo "Password is required.";
-			return false;
+			return "La password è obbligatoria";
 		}
 		else if ($pass != $confirmpass) {
-			// errore password sbagliate
-			$msg = "Le password non coincidono";
-			return false;
+			return "Le password non coincidono";
 		}
 		else {
-			return true;
+			return null;
 		}
 	}
 
@@ -62,25 +66,28 @@
 		}
 	}
 
-	// esecuzione
-	if (isset($_POST['username']) && isset($_POST['password'])){
-
-		$username = $_POST['username'];
-		$email = $_POST['email'];
-		$password = $_POST['password'];
-		$cpassword = $_POST['cpassword'];
-		$trn_date = date("Y-m-d H:i:s");
-
-		if (is_valid_email($email) && is_valid_passwords($password,$cpassword)) {
-			if (create_user($username, $password, $email, $trn_date)) {
-				echo 'Nuovo utente registrato con successo';
+	function registration($username, $password, $cpassword, $email, $trn_date) {
+		// esecuzione
+		if ($username != null && $password != null){
+			if (is_valid_email($email) === null) {
+				if (is_valid_passwords($password,$cpassword) === null) {
+					if (create_user($username, $password, $email, $trn_date)) {
+						return null;
+					}
+					else {
+						return 'Errore durante la registrazione';
+					}
+				}
+				else {
+					return is_valid_passwords($password,$cpassword);
+				}
 			}
 			else {
-				echo 'Errore durante la registrazione';
+				return is_valid_email($email);
 			}
 		}
 		else {
-			echo $msg;
+			return "Tutti i campi sono obbligatori";
 		}
 	}
 ?>
