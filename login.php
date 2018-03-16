@@ -1,55 +1,35 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>Login</title>
-	<link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
-	<?php
-		require('db.php');
-		session_start();
-		// If form submitted, insert values into the database.
-		if (isset($_POST['username'])) {
-        	// removes backslashes
-			$username = stripslashes($_REQUEST['username']);
-
-        	//escapes special characters in a string
-			$username = mysqli_real_escape_string($con,$username);
-			$password = stripslashes($_REQUEST['password']);
-			$password = mysqli_real_escape_string($con,$password);
-
-			// controllo nel db
-        	$query = "SELECT * FROM `users` WHERE username='$username'
-			and password='".md5($password)."'";
-			$result = mysqli_query($con,$query) or die(mysql_error());
-			$rows = mysqli_num_rows($result);
-
-        	if($rows==1){
-        		$queryid = "SELECT id FROM `users` WHERE username='$username'";
-				$id = mysqli_query($con,$queryid) or die(mysql_error());
-	    		$_SESSION['userID'] = $id;
-	    		header("Location: index.php");
-         	}
-         	else {
-				echo "<div class='form'>
-				<h3>Username/password is incorrect.</h3>
-				<br/>Click here to <a href='login.php'>Login</a></div>";
-			}
-    	}
-    	else { 
-	?>
-			<section class="retroBox">
-				<div class="wrapper">
-					<h1>Login</h1>
-					<form action="" method="post" name="login">
-						<input type="text" name="username" placeholder="Username" required /><br>
-						<input type="password" name="password" placeholder="Password" required /><br><br>
-						<button name="submit" type="submit" class="retroButton">Login</button>
-					</form>
-					<p>Non ti sei ancora registrato? <a href='registration.php'>Fallo qui!</a></p>
-				</div>
-			</section>	
-	<?php } ?>
-</body>
+<html lang="it">
+	<head>
+		<meta charset="utf-8"> 
+		<meta name = "author" content = "Francesco Cartier">
+		<meta name = "keywords" content = "login">
+		<link rel="stylesheet" href="/css/style.css" type="text/css">		
+		<title>Login</title>
+	</head>
+	<body>
+		<section class="retroBox">
+			<div class="wrapper">
+				<h1>Login</h1>
+				<form action="loginChecks.php" method="post" name="login">
+					<input type="text" name="username" placeholder="Username" /><br>
+					<input type="password" name="password" placeholder="Password" /><br><br>
+					<button name="submit" type="submit" class="retroButton">Login</button>
+				</form>
+				<?php
+					if ($_GET['loginMessage'] != "success"){
+						echo '<div class="error">';
+						echo '<p>' . $_GET['loginMessage'] . '</p>';
+						echo '</div>';
+					}
+					else if ($_GET['loginMessage'] === "success"){
+						echo '<div class="success">';
+						echo '<p>Registrazione avvenuta con successo</p>';
+						echo '</div>';
+					}
+				?>
+				<p>Non ti sei ancora registrato? <a href='registration.php'>Fallo qui!</a></p>
+			</div>
+		</section>	
+	</body>
 </html>

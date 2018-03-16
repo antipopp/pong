@@ -62,8 +62,12 @@ input:not([type='submit']) {
      background-color: #000;
 }
 
-.important p {
+.error p {
      color: red;
+}
+
+.success p {
+     color: green;
 }
 
 /* bottone retro */
