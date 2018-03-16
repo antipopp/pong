@@ -1,9 +1,11 @@
 var canvas;
 var canvasContext;
+
 var ballX = 50;
 var ballY = 50;
 var ballSpeedX = 10;
 var ballSpeedY = 4;
+var ballRadius = 10;
 
 var paddle1Y = 250;
 var paddle2Y = 250;
@@ -49,7 +51,7 @@ window.onload = function() {
 
 	canvas.addEventListener('mousemove', function(evt) {
 		var mousePos = calculateMousePos(evt);
-		paddle1Y = mousePos.y+PADDLE_HEIGHT;
+		paddle1Y = mousePos.y;
 	});
 }
 
@@ -71,8 +73,8 @@ function moveEverything() {
 	ballY += ballSpeedY;
 
 	// racchetta di destra
-	if (ballX+20 > canvas.width-PADDLE_THICK) {
-		if (ballY+10 > paddle2Y && ballY-10 < paddle2Y+PADDLE_HEIGHT) {
+	if (ballX+ballRadius*2 > canvas.width-PADDLE_THICK) {
+		if (ballY+ballRadius > paddle2Y && ballY-ballRadius < paddle2Y+PADDLE_HEIGHT) {
 			ballSpeedX = -ballSpeedX;
 			
 		    var deltaY = ballY - (paddle2Y+PADDLE_HEIGHT/2);
@@ -87,8 +89,8 @@ function moveEverything() {
 	}
 
 	// racchetta di sinistra
-	if (ballX-20 < 0+PADDLE_THICK) {
-		if (ballY-10 > paddle1Y && ballY-10 < paddle1Y+PADDLE_HEIGHT) {
+	if (ballX-ballRadius*2 < 0+PADDLE_THICK) {
+		if (ballY+ballRadius > paddle1Y && ballY-ballRadius < paddle1Y+PADDLE_HEIGHT) {
 			ballSpeedX = -ballSpeedX;
 
 			var deltaY = ballY - (paddle1Y+PADDLE_HEIGHT/2);
@@ -165,7 +167,7 @@ function drawEverything() {
 	colorRect(canvas.width-PADDLE_THICK,paddle2Y,PADDLE_THICK,PADDLE_HEIGHT, 'white');
 
 	// palla
-	colorCircle(ballX,ballY,10,'red'); 
+	colorCircle(ballX,ballY,ballRadius,'red'); 
 
 	// punteggio
 	canvasContext.fillStyle = 'white';
