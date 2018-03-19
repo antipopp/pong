@@ -35,7 +35,7 @@
 		$query = "SELECT id FROM users WHERE username='" . $username . "' AND password='" . md5($password) . "'";
 		$result = mysqli_query($con,$query);
 
-		if (!$result)
+		if ($result === null)
 			return -1;
 		else
 			return mysqli_query($con,$query);
