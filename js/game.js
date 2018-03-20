@@ -22,7 +22,8 @@ const WINNING_SCORE = 3;
 var request = new XMLHttpRequest(); //New request object
 var username;
 request.onload = function() {
-	username = request.responseText;
+	var temp = request.responseText;
+	username = JSON.parse(temp);
 }
 request.open("get", "userEncode.php", true);
 request.send();

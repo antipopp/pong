@@ -14,7 +14,7 @@
 			<ul>
 				<?php
 					session_start();
-					if(!isset($_SESSION["userId"])) {
+					if(!isset($_SESSION["username"])) {
 						echo '<li><a href="login.php" class="retroButton">Login</a></li>';
 						echo '<li><a href="registration.php" class="retroButton">Registrazione</a></li>';
 					}

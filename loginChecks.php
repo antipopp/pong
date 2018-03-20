@@ -12,10 +12,9 @@
 
 	function login($username, $password){   
 		if ($username != null && $password != null){
-			$userId = authenticate($username, $password);
-			if ($userId > 0) {
+			$check = authenticate($username, $password);
+			if ($check > 0) {
 				session_start();
-				$_SESSION['userId'] = $userId;
 				$_SESSION['username'] = $username;
 				return null;
 			}
@@ -32,7 +31,7 @@
 		mysql_real_escape_string($username);
 		mysql_real_escape_string($password);
 
-		$query = "SELECT id FROM users WHERE username='" . $username . "' AND password='" . md5($password) . "'";
+		$query = "SELECT 1 FROM users WHERE username='" . $username . "' AND password='" . md5($password) . "'";
 		$result = mysqli_query($con,$query);
 
 		if (mysqli_num_rows($result) === 0)
