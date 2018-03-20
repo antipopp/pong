@@ -31,9 +31,5 @@
 			</div>
 		</section>
 		<script src="js/game.js"></script>
-
-		<?php
-		echo "<p>" . $_SESSION("userId") . "</p>";
-		?>
 	</body>
 </html>
