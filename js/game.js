@@ -18,15 +18,20 @@ var playerScore1 = 0;
 var playerScore2 = 0;
 const WINNING_SCORE = 3;
 
-// import ajax
-var request = new XMLHttpRequest(); //New request object
-var username;
-request.onload = function() {
-	var temp = request.responseText;
-	username = JSON.parse(temp);
+var playerData;
+
+// import dal db
+function getData() {
+	var request = new XMLHttpRequest();
+	request.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+	        playerData = JSON.parse(this.responseText)
+	        console.log(playerData.user);
+	    }
+	};
+	request.open("GET", "userEncode.php", true);
+	request.send(); 
 }
-request.open("get", "userEncode.php", true);
-request.send();
 
 function calculateMousePos(evt) {
 	var rect = canvas.getBoundingClientRect();
@@ -63,6 +68,8 @@ window.onload = function() {
 		var mousePos = calculateMousePos(evt);
 		paddle1Y = mousePos.y;
 	});
+
+	getData();
 }
 
 function computerMovement() {
@@ -147,7 +154,7 @@ function drawEverything() {
 		canvasContext.fillStyle = 'white';
 		if (playerScore1 >= WINNING_SCORE) {
 			canvasContext.fillStyle = 'white';
-			canvasContext.font = '30px Arial';
+			canvasContext.font = '30px Helvetica';
 			canvasContext.textAlign="center";
 			canvasContext.fillText("Hai vinto!", 400,200);
 		//	canvasContext.fillText("clicca per continuare", 400,500);
@@ -155,13 +162,13 @@ function drawEverything() {
 		else if (playerScore2 >= WINNING_SCORE) {
 			canvasContext.textAlign="center";
 			canvasContext.fillStyle = 'white';
-			canvasContext.font = '30px Arial';
+			canvasContext.font = '30px Helvetica';
 			canvasContext.fillText("Hai perso.", 400,200);
 		//	canvasContext.fillText("clicca per continuare", 400,500);
 		}
 		canvasContext.textAlign="center";
 		canvasContext.fillStyle = 'white';
-		canvasContext.font = '30px Arial';
+		canvasContext.font = '30px Helvetica';
 		canvasContext.fillText("clicca per giocare", 400,300);
 		
 		return;
@@ -172,8 +179,8 @@ function drawEverything() {
 
 	// utente anonimo o loggato
 	canvasContext.fillStyle = 'white';
-	canvasContext.font = '20px Arial';
-	canvasContext.fillText(username, 250,100);
+	canvasContext.font = '20px Helvetica';
+	canvasContext.fillText(playerData.user, 250,100);
 
 
 	// racchetta sinistra
@@ -187,7 +194,7 @@ function drawEverything() {
 
 	// punteggio
 	canvasContext.fillStyle = 'white';
-	canvasContext.font = '30px Arial';
+	canvasContext.font = '30px Helvetica';
 	canvasContext.fillText(playerScore1, 100,100);
 	canvasContext.fillText(playerScore2, 700,100);
 }
