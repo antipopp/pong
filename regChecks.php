@@ -10,7 +10,7 @@
 	if($regMessage === null)
 		header('location: login.php?loginMessage=success');
 	else
-		header('location: registration.php?regMessage=' . $errorMessage );
+		header('location: registration.php?regMessage=' . $regMessage );
 	
 	// function per validazione email
 	function is_valid_email($email) {
@@ -27,9 +27,9 @@
 		}
 
 		// check email già registrata
-		$slQuery = "SELECT 1 FROM users WHERE email = '$email'";
-		$selectResult = mysqli_query($con,$slQuery);
-		if (mysqli_num_rows($selectResult)>0) {
+		$query = "SELECT 1 FROM users WHERE email = '$email'";
+		$result = mysqli_query($con,$query);
+		if (mysqli_num_rows($result)>0) {
 			return "Email già registrata";
 		}
 
@@ -59,7 +59,7 @@
 		// check username già registrato
 		$query = "SELECT 1 FROM users WHERE username = '$username'";
 		$result = mysqli_query($con,$query);
-		if (mysqli_num_rows($selectResult)>0) {
+		if (mysqli_num_rows($result)>0) {
 			return "Username già registrato";
 		}
 

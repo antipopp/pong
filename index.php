@@ -30,7 +30,10 @@
 				<canvas id="gameCanvas" width="800" height="600"></canvas>
 			</div>
 		</section>
-
 		<script src="js/game.js"></script>
+
+		<?php
+		echo "<p>" . $_SESSION("userId") . "</p>";
+		?>
 	</body>
 </html>

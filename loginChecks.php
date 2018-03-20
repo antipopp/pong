@@ -1,7 +1,7 @@
 <?php
 	require_once 'db.php';
 
-	$userneme = $_POST['username'];
+	$username = $_POST['username'];
 	$password = $_POST['password'];
 
 	$loginMessage = login($username, $password);
@@ -35,10 +35,10 @@
 		$query = "SELECT id FROM users WHERE username='" . $username . "' AND password='" . md5($password) . "'";
 		$result = mysqli_query($con,$query);
 
-		if ($result === null)
+		if (mysqli_num_rows($result) === 0)
 			return -1;
 		else
-			return mysqli_query($con,$query);
+			return $result;
 	}
 
 ?>
