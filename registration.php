@@ -8,6 +8,7 @@
 		<title>Registrazione</title>
 	</head>
 	<body>
+		<header><h1><a href="index.php">PONG</a></h1></header>
 		<section class="retroBox">
 			<div class="wrapper">
 				<h1>Registrazione</h1>

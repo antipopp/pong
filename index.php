@@ -9,7 +9,7 @@
 	</head>
 	<body>
 	<body>
-		<header><h1>PONG</h1></header>
+		<header><h1><a href="index.php">PONG</a></h1></header>
 		<nav>
 			<ul>
 				<?php

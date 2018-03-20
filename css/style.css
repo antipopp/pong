@@ -1,28 +1,45 @@
 @import url(https://fonts.googleapis.com/css?family=Press+Start+2P);
 
 html {
-	 height: 95%;
+	height: 95%;
 }
 
 body {
-	 display: flex;
-	 justify-content: center;
-	 align-items: center;
-	 flex-direction: column;
-	 min-height: 100%;
-	 background-color: #000;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	min-height: 100%;
+	background-color: #000;
 }
 
 h1 {
-	font-family: "Press start 2P", Arial, Sans-serif;
-	 color: #fff;
-	 text-align: center;
+	font-family: "Press start 2P", Helvetica, Sans-serif;
+	color: #fff;
+	text-align: center;
+}
+
+h1 a {
+	text-decoration: none;
+}
+
+h1 a:hover {
+	text-decoration: underline;
+	text-decoration-style: dashed;
+}
+
+h1 a:visited {
+	color: #fff;
 }
 
 h3 {
-	 font-family: "Press start 2P", Arial, Sans-serif;
-	 color: #fff;
-	 text-align: center;
+	font-family: "Press start 2P", Helvetica, Sans-serif;
+	color: #fff;
+	text-align: center;
+}
+
+a {
+	outline: none;
 }
 
 nav {
@@ -49,7 +66,7 @@ nav ul li a {
 }
 
 p {
-	font-family: Arial, Sans-serif;
+	font-family: Helvetica, Sans-serif;
 }
 
 input:not([type='submit']) {
@@ -60,7 +77,7 @@ input:not([type='submit']) {
 	 padding: 10px;
 	 color: #fff;
 	 font-size: 15px;
-	 font-family: "Press start 2P", Arial, Sans-serif;
+	 font-family: "Press start 2P", Helvetica, Sans-serif;
 	 margin-top: 10px;
 	 background-color: #000;
 }
@@ -79,7 +96,7 @@ input:not([type='submit']) {
 	 position: relative;
 	 font-size: 1em;
 	 padding: 10px;
-	 font-family: "Press start 2P", Arial, Sans-serif;
+	 font-family: "Press start 2P", Helvetica, Sans-serif;
 	 color: white;
 	 text-decoration: none;
 	 box-shadow: inset -4px -4px 0px #545454;

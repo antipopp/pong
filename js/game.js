@@ -18,6 +18,15 @@ var playerScore1 = 0;
 var playerScore2 = 0;
 const WINNING_SCORE = 3;
 
+// import ajax
+var request = new XMLHttpRequest(); //New request object
+var username;
+request.onload = function() {
+	username = request.responseText;
+}
+request.open("get", "userEncode.php", true);
+request.send();
+
 function calculateMousePos(evt) {
 	var rect = canvas.getBoundingClientRect();
 	var root = document.documentElement;
@@ -159,6 +168,12 @@ function drawEverything() {
 	// rendering degli elementi
 
 	drawNet();
+
+	// utente anonimo o loggato
+	canvasContext.fillStyle = 'white';
+	canvasContext.font = '20px Arial';
+	canvasContext.fillText(username, 250,100);
+
 
 	// racchetta sinistra
 	colorRect(0,paddle1Y,PADDLE_THICK,PADDLE_HEIGHT, 'white');
