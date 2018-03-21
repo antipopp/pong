@@ -24,83 +24,77 @@ var playerScore1 = 0;
 var playerScore2 = 0;
 const WINNING_SCORE = 3;
 
-var playerData;
+var playerData = '';
 
-// import dal db
+
 function getData() {
-	var request = new XMLHttpRequest();
-	request.onreadystatechange = function() {
+	var req = new XMLHttpRequest();
+	req.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			playerData = JSON.parse(this.responseText)
 		}
 	};
-	request.open("GET", "userEncode.php", true);
-	request.send(); 
+	req.open("GET", "userEncode.php", true);
+	req.send(); 
 }
 
-/*function pushData() {
-	var request = new XMLHttpRequest();
-	request.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			console.log(playerData);
+/*function makeAjaxRequest(url, callback, method, postData, dataType) {
+	if (!window.XMLHttpRequest) {
+		return null;
+	}
+	
+	var req = new XMLHttpRequest();
+	
+	// assign defaults or optional arguments
+	method = method || 'GET';
+	postData = postData || null;
+	dataType = dataType || 'text/plain';
+	
+	req.open(method, url);
+	req.setRequestHeader('Content-Type', dataType);
+	
+	// handle readystatechange event
+	req.onreadystatechange = function() {
+		if ( req.readyState === 4 ) { // req DONE
+			// req.status success
+			if ( req.status === 200 ) {
+				callback.success(req); 
+			} else { // handle request failure
+				callback.failure(req); 
+			}
 		}
-	};	
-	request.open("POST", "userUpdate.php", true);
-	request.setRequestHeader("Content-Type", "application/json");
-	request.send(JSON.stringify(playerData));
+	}
+	
+	req.send(postData); // send request
+	
+	return req; // return request object
 }*/
 
-function makeXHRRequest( url, callback, method, postData, dataType ) {
-    if ( !window.XMLHttpRequest ) {
-        return null;
-    }
-    
-    // create request object
-    var req = new XMLHttpRequest();
-    
-    // assign defaults to optional arguments
-    method = method || 'GET';
-    postData = postData || null;
-    dataType = dataType || 'text/plain';
-    
-    // pass method and url to open method
-    req.open( method, url );
-    // set Content-Type header 
-    req.setRequestHeader('Content-Type', dataType);
-    
-    // handle readystatechange event
-    req.onreadystatechange = function() {
-        // check readyState property
-        if ( req.readyState === 4 ) { // 4 signifies DONE
-            // req.status of 200 means success
-            if ( req.status === 200 ) {
-                callback.success(req); 
-            } else { // handle request failure
-                callback.failure(req); 
-            }
-        }
-    }
-    
-    req.send( postData ); // send request
-    
-    return req; // return request object
+function sendData(data) {
+	var req = new XMLHttpRequest();	
+	
+	req.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200)
+			console.log('Update effettuato');
+	}
+	req.open("POST", "userUpdate.php");
+	req.setRequestHeader('Content-Type', 'application/json');
+	req.send(JSON.stringify(data));
 }
-
-function handleJSONData(data) {
-    
-    // callback object defines functions that handle success and failure of request
-    var callback = {
-        success: function(req) {
-            console.log(req.responseText);
-        },
-        failure: function(req) {
-            console.log('An error has occurred.');
-        }
-    }
-    
-    // arguments: url, callback object, request method, data (stringified), data type
-    makeXHRRequest( 'userUpdate.php', callback, 'POST', JSON.stringify(data), 'application/json' );
-}
+/*function handleJSONExport(data) {
+	
+	// handle Ajax success/failure
+	var callback = {
+		success: function(req) {
+			console.log(req.responseText);
+		},
+		failure: function(req) {
+			console.log('An error has occurred updating player data');
+		}
+	}
+	
+	makeAjaxRequest('userUpdate.php', callback, 'POST', JSON.stringify(data), 'application/json');
+}*/
 
 function calculateMousePos(evt) {
 	var rect = canvas.getBoundingClientRect();
@@ -163,7 +157,7 @@ function moveEverything() {
 		if (ballY+ballRadius > paddle2Y && ballY-ballRadius < paddle2Y+PADDLE_HEIGHT) {
 			ballSpeedX = -ballSpeedX;
 			
-		    var deltaY = ballY - (paddle2Y+PADDLE_HEIGHT/2);
+			var deltaY = ballY - (paddle2Y+PADDLE_HEIGHT/2);
 			ballSpeedY = deltaY * 0.35;
 		}	
 	}
@@ -202,12 +196,12 @@ function moveEverything() {
 function ballReset() {
 	if (playerScore1 >= WINNING_SCORE) {
 		playerData.win += 1;
-		handleJSONData(playerData);
+		sendData(playerData);
 		winScreen = true;
 	} 
 	else if (playerScore2 >= WINNING_SCORE) {
 		playerData.lost += 1;
-		handleJSONData(playerData);
+		sendData(playerData);
 		winScreen = true;
 	}
 

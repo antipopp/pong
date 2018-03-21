@@ -1,5 +1,4 @@
 <?php
-	header("Content-type: text/plain");
 	require_once 'db.php';
 	session_start();
 	if (!isset($_SESSION['username'])) {
