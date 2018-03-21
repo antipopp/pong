@@ -1,9 +1,3 @@
-/****************************************************
- TO DO:
- push win/loss data to server
-
-****************************************************/
-
 var canvas;
 var canvasContext;
 
@@ -13,8 +7,8 @@ var ballSpeedX = 10;
 var ballSpeedY = 4;
 var ballRadius = 10;
 
-var paddle1Y = 250;
-var paddle2Y = 250;
+var paddle1Y = 300;
+var paddle2Y = 300;
 const PADDLE_HEIGHT = 100;
 const PADDLE_THICK = 10;
 
@@ -38,38 +32,6 @@ function getData() {
 	req.send(); 
 }
 
-/*function makeAjaxRequest(url, callback, method, postData, dataType) {
-	if (!window.XMLHttpRequest) {
-		return null;
-	}
-	
-	var req = new XMLHttpRequest();
-	
-	// assign defaults or optional arguments
-	method = method || 'GET';
-	postData = postData || null;
-	dataType = dataType || 'text/plain';
-	
-	req.open(method, url);
-	req.setRequestHeader('Content-Type', dataType);
-	
-	// handle readystatechange event
-	req.onreadystatechange = function() {
-		if ( req.readyState === 4 ) { // req DONE
-			// req.status success
-			if ( req.status === 200 ) {
-				callback.success(req); 
-			} else { // handle request failure
-				callback.failure(req); 
-			}
-		}
-	}
-	
-	req.send(postData); // send request
-	
-	return req; // return request object
-}*/
-
 function sendData(data) {
 	var req = new XMLHttpRequest();	
 	
@@ -81,20 +43,6 @@ function sendData(data) {
 	req.setRequestHeader('Content-Type', 'application/json');
 	req.send(JSON.stringify(data));
 }
-/*function handleJSONExport(data) {
-	
-	// handle Ajax success/failure
-	var callback = {
-		success: function(req) {
-			console.log(req.responseText);
-		},
-		failure: function(req) {
-			console.log('An error has occurred updating player data');
-		}
-	}
-	
-	makeAjaxRequest('userUpdate.php', callback, 'POST', JSON.stringify(data), 'application/json');
-}*/
 
 function calculateMousePos(evt) {
 	var rect = canvas.getBoundingClientRect();
@@ -195,11 +143,17 @@ function moveEverything() {
 
 function ballReset() {
 	if (playerScore1 >= WINNING_SCORE) {
-		playerData.win += 1;
+		if (playerData.user != 'Ospite') {
+			winScreen = true;
+		}
+		playerData.lost += 1;
 		sendData(playerData);
 		winScreen = true;
 	} 
 	else if (playerScore2 >= WINNING_SCORE) {
+		if (playerData.user != 'Ospite') {
+			winScreen = true;
+		}
 		playerData.lost += 1;
 		sendData(playerData);
 		winScreen = true;
@@ -231,17 +185,17 @@ function drawEverything() {
 			canvasContext.textAlign='center';
 			canvasContext.fillStyle = 'white';
 			canvasContext.font = '30px Helvetica';
-			canvasContext.fillText("Hai perso.", 400,200);
+			canvasContext.fillText("Hai perso :(", 400,200);
 		}
 		canvasContext.textAlign='center';
 		canvasContext.fillStyle = 'white';
 		canvasContext.font = '30px Helvetica';
 		canvasContext.fillText("clicca per giocare", 400,300);
 		canvasContext.font = '20px Helvetica';
-		canvasContext.fillText("sei loggato come:", 400,400);
+		canvasContext.fillText("stai giocando come:", 400,400);
 		canvasContext.font = '25px Helvetica';
 		canvasContext.fillText(playerData.user, 400,450);
-		if (playerData.name !== "Anonimo") {
+		if (playerData.user != "Ospite") {
 			canvasContext.textAlign='end';
 			canvasContext.fillStyle = 'green';
 			canvasContext.font = '25px Helvetica';

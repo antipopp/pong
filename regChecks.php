@@ -52,9 +52,10 @@
 	// function username valido
 	function is_valid_username($username) {
 		global $con;
-		if (empty($username)) {
+		if (empty($username))
 			return "Username obbligatorio";
-		}
+		else if ($username === 'Ospite' || $username === 'ospite')
+			return "Username non valido";
 
 		// check username già registrato
 		$query = "SELECT 1 FROM users WHERE username = '$username'";

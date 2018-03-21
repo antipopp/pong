@@ -2,7 +2,7 @@
 	require_once 'db.php';
 	session_start();
 	if (!isset($_SESSION['username'])) {
-		$arr = array('user' => 'Anonimo', 'win' => 'N/A', 'lost' => 'N/A');
+		$arr = array('user' => 'Ospite', 'win' => null, 'lost' => null, 'ratio' => null);
 		echo json_encode($arr, JSON_PRETTY_PRINT);
 	}
 	else {
@@ -14,7 +14,8 @@
 			$rows = array(
 				'user' => $r['user'],
 				'win' => $r['win'],
-      			'lost' => $r['lost']
+      			'lost' => $r['lost'],
+      			'ratio' => $r['ratio']
 			);
 		}
 

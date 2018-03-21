@@ -22,7 +22,7 @@
 						echo '<li><a href="logout.php" class="retroButton">Logout</a></li>';
 					}
 				?>
-				<li><a href="#" class="retroButton">Classifica</a></li>
+				<li><a href="leaderboard.php" class="retroButton">Classifica</a></li>
 			</ul>
 		</nav>
 		<section class="retroBox">
