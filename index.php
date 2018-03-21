@@ -8,7 +8,6 @@
 		<title>PONG!</title>
 	</head>
 	<body>
-	<body>
 		<header><h1><a href="index.php">PONG</a></h1></header>
 		<nav>
 			<ul>

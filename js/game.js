@@ -146,7 +146,7 @@ function ballReset() {
 		if (playerData.user != 'Ospite') {
 			winScreen = true;
 		}
-		playerData.lost += 1;
+		playerData.win += 1;
 		sendData(playerData);
 		winScreen = true;
 	} 
