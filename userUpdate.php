@@ -1,10 +1,14 @@
 <?php
-	// how to access data sent using JSON
+	require_once 'db.php';
 	$jsondata = file_get_contents('php://input');
 
-	// http://php.net/manual/en/function.json-decode.php
-	$player = json_decode( $jsondata, true ); // 2nd arg true to convert objects to associative arrays
+	$player = json_decode($jsondata, true);
 
-	// more info at http://www.dyn-web.com/tutorials/php-js/json/decode.php
-	print_r ($player);
+	$query = "UPDATE leaderboard SET win = ".$player['win'].", lost = ".$player['lost']." WHERE user ='".$player['user']."'";
+	$result = mysqli_query($con, $query);
+
+	if ($result) 
+		echo 'Succesful update';
+	else
+		echo 'Failed update';
 ?>

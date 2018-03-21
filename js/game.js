@@ -86,6 +86,22 @@ function makeXHRRequest( url, callback, method, postData, dataType ) {
     return req; // return request object
 }
 
+function handleJSONData(data) {
+    
+    // callback object defines functions that handle success and failure of request
+    var callback = {
+        success: function(req) {
+            console.log(req.responseText);
+        },
+        failure: function(req) {
+            console.log('An error has occurred.');
+        }
+    }
+    
+    // arguments: url, callback object, request method, data (stringified), data type
+    makeXHRRequest( 'userUpdate.php', callback, 'POST', JSON.stringify(data), 'application/json' );
+}
+
 function calculateMousePos(evt) {
 	var rect = canvas.getBoundingClientRect();
 	var root = document.documentElement;
@@ -186,12 +202,12 @@ function moveEverything() {
 function ballReset() {
 	if (playerScore1 >= WINNING_SCORE) {
 		playerData.win += 1;
-		makeXHRRequest('userUpdate.php', callback, 'POST', JSON.stringify(playerData),'application/json');
+		handleJSONData(playerData);
 		winScreen = true;
 	} 
 	else if (playerScore2 >= WINNING_SCORE) {
 		playerData.lost += 1;
-		makeXHRRequest('userUpdate.php', callback, 'POST', JSON.stringify(playerData),'application/json');
+		handleJSONData(playerData);
 		winScreen = true;
 	}
 
