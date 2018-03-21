@@ -1,5 +1,5 @@
 <?php
-	error_reporting(E_ALL); ini_set('display_errors', 1);
+	header("Content-type: text/plain");
 	require_once 'db.php';
 	session_start();
 	if (!isset($_SESSION['username'])) {
@@ -12,8 +12,13 @@
 
 		$rows = array();
 		while($r = mysqli_fetch_assoc($result)) {
-			$rows = $r;
+			$rows = array(
+				'user' => $r['user'],
+				'win' => $r['win'],
+      			'lost' => $r['lost']
+			);
 		}
-		echo json_encode($rows, JSON_PRETTY_PRINT);
+
+		echo json_encode($rows, JSON_NUMERIC_CHECK);
 	}
 ?>

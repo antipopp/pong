@@ -21,11 +21,11 @@ h1 {
 
 h1 a {
 	text-decoration: none;
+	color: #fff;
 }
 
 h1 a:hover {
 	text-decoration: underline;
-	text-decoration-style: dashed;
 }
 
 h1 a:visited {
@@ -36,10 +36,6 @@ h3 {
 	font-family: "Press start 2P", Helvetica, Sans-serif;
 	color: #fff;
 	text-align: center;
-}
-
-a {
-	outline: none;
 }
 
 nav {

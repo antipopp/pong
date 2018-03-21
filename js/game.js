@@ -1,3 +1,9 @@
+/****************************************************
+ TO DO:
+ push win/loss data to server
+
+****************************************************/
+
 var canvas;
 var canvasContext;
 
@@ -24,13 +30,60 @@ var playerData;
 function getData() {
 	var request = new XMLHttpRequest();
 	request.onreadystatechange = function() {
-	    if (this.readyState == 4 && this.status == 200) {
-	        playerData = JSON.parse(this.responseText)
-	        console.log(playerData.user);
-	    }
+		if (this.readyState == 4 && this.status == 200) {
+			playerData = JSON.parse(this.responseText)
+		}
 	};
 	request.open("GET", "userEncode.php", true);
 	request.send(); 
+}
+
+/*function pushData() {
+	var request = new XMLHttpRequest();
+	request.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			console.log(playerData);
+		}
+	};	
+	request.open("POST", "userUpdate.php", true);
+	request.setRequestHeader("Content-Type", "application/json");
+	request.send(JSON.stringify(playerData));
+}*/
+
+function makeXHRRequest( url, callback, method, postData, dataType ) {
+    if ( !window.XMLHttpRequest ) {
+        return null;
+    }
+    
+    // create request object
+    var req = new XMLHttpRequest();
+    
+    // assign defaults to optional arguments
+    method = method || 'GET';
+    postData = postData || null;
+    dataType = dataType || 'text/plain';
+    
+    // pass method and url to open method
+    req.open( method, url );
+    // set Content-Type header 
+    req.setRequestHeader('Content-Type', dataType);
+    
+    // handle readystatechange event
+    req.onreadystatechange = function() {
+        // check readyState property
+        if ( req.readyState === 4 ) { // 4 signifies DONE
+            // req.status of 200 means success
+            if ( req.status === 200 ) {
+                callback.success(req); 
+            } else { // handle request failure
+                callback.failure(req); 
+            }
+        }
+    }
+    
+    req.send( postData ); // send request
+    
+    return req; // return request object
 }
 
 function calculateMousePos(evt) {
@@ -55,7 +108,7 @@ function handleMouseClick() {
 window.onload = function() {
 	canvas = document.getElementById('gameCanvas');
 	canvasContext = canvas.getContext('2d');
-		var fps = 30;
+	var fps = 30;
 	
 	setInterval(function() {
 		drawEverything();
@@ -66,7 +119,7 @@ window.onload = function() {
 
 	canvas.addEventListener('mousemove', function(evt) {
 		var mousePos = calculateMousePos(evt);
-		paddle1Y = mousePos.y;
+		paddle1Y = mousePos.y - PADDLE_HEIGHT/2;
 	});
 
 	getData();
@@ -131,7 +184,14 @@ function moveEverything() {
 	}
 
 function ballReset() {
-	if (playerScore1 >= WINNING_SCORE || playerScore2 >= WINNING_SCORE) {
+	if (playerScore1 >= WINNING_SCORE) {
+		playerData.win += 1;
+		makeXHRRequest('userUpdate.php', callback, 'POST', JSON.stringify(playerData),'application/json');
+		winScreen = true;
+	} 
+	else if (playerScore2 >= WINNING_SCORE) {
+		playerData.lost += 1;
+		makeXHRRequest('userUpdate.php', callback, 'POST', JSON.stringify(playerData),'application/json');
 		winScreen = true;
 	}
 
@@ -151,26 +211,37 @@ function drawEverything() {
 	colorRect(0,0,canvas.width,canvas.height, 'black');
 
 	if (winScreen) {
-		canvasContext.fillStyle = 'white';
 		if (playerScore1 >= WINNING_SCORE) {
 			canvasContext.fillStyle = 'white';
 			canvasContext.font = '30px Helvetica';
-			canvasContext.textAlign="center";
+			canvasContext.textAlign='center';
 			canvasContext.fillText("Hai vinto!", 400,200);
-		//	canvasContext.fillText("clicca per continuare", 400,500);
 		}
 		else if (playerScore2 >= WINNING_SCORE) {
-			canvasContext.textAlign="center";
+			canvasContext.textAlign='center';
 			canvasContext.fillStyle = 'white';
 			canvasContext.font = '30px Helvetica';
 			canvasContext.fillText("Hai perso.", 400,200);
-		//	canvasContext.fillText("clicca per continuare", 400,500);
 		}
-		canvasContext.textAlign="center";
+		canvasContext.textAlign='center';
 		canvasContext.fillStyle = 'white';
 		canvasContext.font = '30px Helvetica';
 		canvasContext.fillText("clicca per giocare", 400,300);
-		
+		canvasContext.font = '20px Helvetica';
+		canvasContext.fillText("sei loggato come:", 400,400);
+		canvasContext.font = '25px Helvetica';
+		canvasContext.fillText(playerData.user, 400,450);
+		if (playerData.name !== "Anonimo") {
+			canvasContext.textAlign='end';
+			canvasContext.fillStyle = 'green';
+			canvasContext.font = '25px Helvetica';
+			canvasContext.fillText(playerData.win, 390,500);
+			canvasContext.textAlign='start';
+			canvasContext.fillStyle = 'red';
+			canvasContext.font = '25px Helvetica';
+			canvasContext.fillText(playerData.lost, 410,500);
+		}
+
 		return;
 	}
 	// rendering degli elementi
