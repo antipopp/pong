@@ -1,5 +1,5 @@
 <?php
-	require_once 'db.php';
+	require_once $_SERVER["DOCUMENT_ROOT"].'/php/db.php';
 	$username = $_POST['username'];
 	$email = $_POST['email'];
 	$password = $_POST['password'];
@@ -8,9 +8,9 @@
 
 	$regMessage = registration($username, $password, $cpassword, $email, $trn_date);
 	if($regMessage === null)
-		header('location: loginForm.php?loginMessage=success');
+		echo "success";
 	else
-		header('location: regForm.php?regMessage=' . $regMessage );
+		echo $regMessage;
 	
 	// function per validazione email
 	function is_valid_email($email) {

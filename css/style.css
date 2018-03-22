@@ -82,12 +82,14 @@ input:not([type='submit']) {
 	 background-color: #000;
 }
 
-.error p {
+.error {
 	 color: red;
+	 font-size: 15px;
 }
 
-.success p {
+.success {
 	 color: green;
+	 font-size: 15px;
 }
 
 /* bottone retro */

@@ -6,9 +6,9 @@
 
 	$loginMessage = login($username, $password);
 	if($loginMessage === null)
-		header('location: ../index.php');
+		echo "success";
 	else
-		header('location: loginForm.php?loginMessage=' . $loginMessage );
+		echo $loginMessage;
 
 	function login($username, $password){   
 		if ($username != null && $password != null){
