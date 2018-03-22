@@ -1,11 +1,12 @@
 @import url(https://fonts.googleapis.com/css?family=Press+Start+2P);
 
 html {
-	height: 95%;
+	height: 100%;
 }
 
 body {
 	display: flex;
+	z-index: 0;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
@@ -39,26 +40,17 @@ h3 {
 }
 
 nav {
-	display: table;
-	table-layout: fixed;
-	width: 70%;
-	margin-bottom: 20px;
+	width: 100%;
+	margin: 25px 0px;
+	display: flex;
+	justify-content: center;
 }
 
-nav ul {
-	display: table-row;
-	margin: 0;
-	padding: 0;
-}
-
-nav ul li {
-	list-style: none;
-	display: table-cell;
-	text-align: center;
-}
-
-nav ul li a {
-	display: block;
+nav a {
+	margin: 0px 20px;
+	text-decoration: none;
+	display: inline;
+	font-size: 19px;
 }
 
 p {
@@ -137,6 +129,7 @@ input:not([type='submit']) {
 	 border-right: 10px solid #fff;
 	 position: relative; 
 	 box-sizing: border-box;
+	 background-color: #000;
 }
 
 .retroBox .wrapper { 
