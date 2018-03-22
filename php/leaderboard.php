@@ -4,14 +4,15 @@
 		<meta charset="utf-8"> 
 		<meta name = "author" content = "Francesco Cartier">
 		<meta name = "keywords" content = "classifica">
-		<link rel="stylesheet" href="/css/style.css" type="text/css">       
+		<link rel="stylesheet" href="/css/style.css" type="text/css"> 
+		<link rel="stylesheet" href="/css/modal.css" type="text/css">     
 		<title>PONG!</title>
 	</head>
 	<body>
 	<body>
-		<header><h1><a href="index.php">PONG</a></h1></header>
+		<header><h1><a href="/index.php">PONG</a></h1></header>
 		<?php
-			include './php/navbar.php';
+			include $_SERVER["DOCUMENT_ROOT"].'/php/navbar.php';
 		?>
 		<table>
 		<thead>
@@ -24,7 +25,7 @@
 		</thead>
 		<tbody>
 		<?php
-			require_once './php/db.php';
+			require_once $_SERVER["DOCUMENT_ROOT"].'/php/db.php';
 			$results = mysqli_query($con,"SELECT * FROM leaderboard ORDER BY ratio DESC");
 			while($row = mysqli_fetch_assoc($results)) {
 			?>
@@ -40,5 +41,6 @@
 			?>
 			</tbody>
 			</table>
+		<script type="text/javascript" src="/js/modal.js"></script>
 	</body>
 </html>

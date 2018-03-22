@@ -1,14 +1,14 @@
 <?php
-	require_once './php/db.php';
+	require_once 'db.php';
 
 	$username = $_POST['username'];
 	$password = $_POST['password'];
 
 	$loginMessage = login($username, $password);
 	if($loginMessage === null)
-		header('location: ./index.php');
+		header('location: ../index.php');
 	else
-		header('location: ./php/loginForm.php?loginMessage=' . $loginMessage );
+		header('location: loginForm.php?loginMessage=' . $loginMessage );
 
 	function login($username, $password){   
 		if ($username != null && $password != null){

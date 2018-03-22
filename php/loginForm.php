@@ -1,8 +1,8 @@
-<div id="id01" class="modal">
+<div id="login" class="modal">
 	<section class="retroBox animate">
 		<div class="wrapper">
 			<h1>Login</h1>
-			<form action="loginChecks.php" method="post" name="login">
+			<form action="/php/loginChecks.php" method="post" name="login">
 				<input type="text" name="username" placeholder="Username" /><br>
 				<input type="password" name="password" placeholder="Password" /><br><br>
 				<?php

@@ -1,5 +1,5 @@
 <?php
-	require_once './php/db.php';
+	require_once 'db.php';
 	$jsondata = file_get_contents('php://input');
 
 	$player = json_decode($jsondata, true);

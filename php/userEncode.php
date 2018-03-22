@@ -1,5 +1,5 @@
 <?php
-	require_once './php/db.php';
+	require_once 'db.php';
 	session_start();
 	if (!isset($_SESSION['username'])) {
 		$arr = array('user' => 'Ospite', 'win' => null, 'lost' => null, 'ratio' => null);
