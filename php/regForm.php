@@ -21,7 +21,7 @@
 				?>
 				<button type="submit" name="submit" class="retroButton">Registrati</button>
 			</form>
-			<p>Sei già registrato? Effettua il <a onclick="document.getElementById('login').style.display='flex'">login</a>!</p>
+			<p>Sei già registrato? Effettua il <a href="#" onclick="document.getElementById('reg').style.display='none';document.getElementById('login').style.display='flex'">login</a>!</p>
 		</div>
 	</section>
 </div>

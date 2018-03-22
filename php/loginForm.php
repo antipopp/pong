@@ -21,7 +21,7 @@
 				?>
 				<button name="submit" type="submit" class="retroButton">Login</button>
 			</form>
-			<p>Non ti sei ancora registrato? <a href='registration.php'>Fallo qui!</a></p>
+			<p>Non ti sei ancora registrato? <a href="#" onclick="document.getElementById('login').style.display='none';document.getElementById('reg').style.display='flex'">Fallo qui!</a></p>
 		</div>
 	</section>
 </div>
