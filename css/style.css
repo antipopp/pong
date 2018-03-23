@@ -152,6 +152,7 @@ input:not([type='submit']) {
 
 .gameContainer {
 	padding: 0 !important;
+	height: 600px;
 }
 
 /* quadratini */

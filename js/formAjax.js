@@ -42,11 +42,12 @@ function sendLoginForm() {
 			if (req.responseText == 'success') {
 				location.reload();
 			}
-			else
+			else {
 				var node = document.getElementById('loginMessage');
 				while (node.firstChild)
 					node.removeChild(node.firstChild);
 				node.appendChild(document.createTextNode(req.responseText));
+			}
 		}
 	}
 

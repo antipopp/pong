@@ -1,10 +1,10 @@
 var canvas;
 var canvasContext;
 
-var ballX = 50;
-var ballY = 50;
-var ballSpeedX = 10;
-var ballSpeedY = 4;
+var ballX = 400;
+var ballY = 300;
+var ballSpeedX = 7;
+var ballSpeedY = 0;
 var ballRadius = 10;
 
 var paddle1Y = 300;
@@ -37,7 +37,7 @@ function sendData(data) {
 	
 	req.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200)
-			console.log('Update effettuato');
+			console.log(this.responseText);
 	}
 	req.open("POST", "../php/userUpdate.php");
 	req.setRequestHeader('Content-Type', 'application/json');
@@ -65,12 +65,15 @@ function handleMouseClick() {
 window.onload = function() {
 	canvas = document.getElementById('gameCanvas');
 	canvasContext = canvas.getContext('2d');
-	var fps = 30;
-	
-	setInterval(function() {
-		drawEverything();
+	getData();
+
+	function frame() {
 		moveEverything();
-	}, 1000/fps);
+		drawEverything();
+		requestAnimationFrame(frame);
+	}
+	
+	requestAnimationFrame(frame);
 	
 	canvas.addEventListener('mousedown',handleMouseClick);
 
@@ -79,16 +82,16 @@ window.onload = function() {
 		paddle1Y = mousePos.y - PADDLE_HEIGHT/2;
 	});
 
-	getData();
+	
 }
 
 function computerMovement() {
 	var paddle2YCenter = paddle2Y + (PADDLE_HEIGHT/2);
 
 	if (paddle2YCenter < ballY-35)
-		paddle2Y += 6;
+		paddle2Y += 5;
 	else if (paddle2YCenter > ballY+35)
-		paddle2Y -= 6;
+		paddle2Y -= 5;
 }
 
 function moveEverything() {
@@ -100,28 +103,28 @@ function moveEverything() {
 	ballY += ballSpeedY;
 
 	// racchetta di destra
-	if (ballX+ballRadius*2 > canvas.width-PADDLE_THICK) {
+	if (ballX+ballRadius > canvas.width-PADDLE_THICK) {
 		if (ballY+ballRadius > paddle2Y && ballY-ballRadius < paddle2Y+PADDLE_HEIGHT) {
 			ballSpeedX = -ballSpeedX;
 			
 			var deltaY = ballY - (paddle2Y+PADDLE_HEIGHT/2);
-			ballSpeedY = deltaY * 0.35;
+			ballSpeedY = deltaY * 0.18;
 		}	
 	}
 
 	// muro di destra
 	if (ballX > canvas.width) {
-		playerScore1++; // il punteggio deve stare prima di ballReset() 
+		playerScore1++; 
 		ballReset();
 	}
 
 	// racchetta di sinistra
-	if (ballX-ballRadius*2 < 0+PADDLE_THICK) {
+	if (ballX-ballRadius < 0+PADDLE_THICK) {
 		if (ballY+ballRadius > paddle1Y && ballY-ballRadius < paddle1Y+PADDLE_HEIGHT) {
 			ballSpeedX = -ballSpeedX;
 
 			var deltaY = ballY - (paddle1Y+PADDLE_HEIGHT/2);
-			ballSpeedY = deltaY * 0.35;
+			ballSpeedY = deltaY * 0.18;
 		}
 	}
 
@@ -131,31 +134,36 @@ function moveEverything() {
 		ballReset();
 	}
 
-	// muri sopra e sotto
-	if (ballY > canvas.height) {
+	// muro sotto
+	if (ballY+ballRadius > canvas.height) {
 		ballSpeedY = -ballSpeedY;
 	}
 
-	if (ballY < 0) 
+	// muro sopra
+	if (ballY-ballRadius < 0) 
 		ballSpeedY = -ballSpeedY;
-	}
+}
 
 function ballReset() {
 	if (playerScore1 >= WINNING_SCORE) {
-		if (playerData.user != 'Ospite') {
+		if (playerData.user == 'Ospite') {
 			winScreen = true;
 		}
-		playerData.win += 1;
-		sendData(playerData);
-		winScreen = true;
+		else {
+			playerData.win += 1;
+			sendData(playerData);
+			winScreen = true;
+		}
 	} 
 	else if (playerScore2 >= WINNING_SCORE) {
-		if (playerData.user != 'Ospite') {
+		if (playerData.user == 'Ospite') {
 			winScreen = true;
 		}
-		playerData.lost += 1;
-		sendData(playerData);
-		winScreen = true;
+		else {
+			playerData.lost += 1;
+			sendData(playerData);
+			winScreen = true;
+		}
 	}
 
 	ballSpeedX = -ballSpeedX;
@@ -164,8 +172,8 @@ function ballReset() {
 }
 
 function drawNet() {
-	for(var i=0;i<canvas.height;i+=40) {
-		colorRect(canvas.width/2-1,i,2,20,'white');
+	for(var i=0;i<=canvas.height;i+=40) {
+		colorRect(canvas.width/2-2,i,4,20,'white');
 	}
 }
 
@@ -243,4 +251,5 @@ function colorCircle(posX, posY, radius, color) {
 	canvasContext.beginPath();
 	canvasContext.arc(posX, posY, radius, 0, Math.PI*2, true)
 	canvasContext.fill(); 
+	canvasContext.closePath();
 }
