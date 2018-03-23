@@ -10,10 +10,16 @@ function sendRegForm() {
 		if (req.readyState == 4 && req.status == 200) {
 			if (req.responseText == 'success') {
 				modalSwitch('toLogin');
-				document.getElementById('loginSuccess').innerHTML='Registrazione avvenuta con successo!';
+				var node = document.getElementById('loginSuccess');
+				while (node.firstChild)
+					node.removeChild(node.firstChild);
+				node.appendChild(document.createTextNode('Registrazione avvenuta con successo'));
 			}
 			else {
-				document.getElementById('regMessage').innerHTML = req.responseText;
+				var node = document.getElementById('regMessage');
+				while (node.firstChild)
+					node.removeChild(node.firstChild);
+				node.appendChild(document.createTextNode(req.responseText));				
 			}
 
 		}
