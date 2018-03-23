@@ -13,31 +13,38 @@
 		echo $regMessage;
 	
 	// function per validazione email
-	function is_valid_email($email) {
-		// variabile di connessione al db
+	function isValidEmail($email) {
 		global $con;
 		if (empty($email)) {
 			return "Email obbligatoria";
 		}
 		else {
-			// check formattazioene email
+			// formattazioene email
 			if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 				return "Formato email non valido";
 			}
 		}
 
 		// check email già registrata
-		$query = "SELECT 1 FROM users WHERE email = '$email'";
-		$result = mysqli_query($con,$query);
-		if (mysqli_num_rows($result)>0) {
+		$query = "SELECT 1 FROM users WHERE email=?";
+		$existingEmail = $con->prepare($query);
+		$existingEmail->bind_param('s',$email);
+		$existingEmail->execute();
+		$existingEmail->bind_result($result);
+		$existingEmail->fetch();
+
+		if ($result===1) {
+			$existingEmail->close();
 			return "Email già registrata";
 		}
-
-		return null;
+		else {
+			$existingEmail->close();
+			return null;
+		}
 	}
 
 	// function conferma password
-	function is_valid_passwords($pass,$confirmpass) {
+	function isValidPassword($pass,$confirmpass) {
 		if (empty($pass)) {
 			return "La password è obbligatoria";
 		}
@@ -50,7 +57,7 @@
 	}
 
 	// function username valido
-	function is_valid_username($username) {
+	function isValidUsername($username) {
 		global $con;
 		if (empty($username))
 			return "Username obbligatorio";
@@ -58,24 +65,34 @@
 			return "Username non valido";
 
 		// check username già registrato
-		$query = "SELECT 1 FROM users WHERE username = '$username'";
-		$result = mysqli_query($con,$query);
-		if (mysqli_num_rows($result)>0) {
+		$query = "SELECT 1 FROM users WHERE username = ?";
+		$existingUser = $con->prepare($query);
+		$existingUser->bind_param('s',$username);
+		$existingUser->execute();
+		$existingUser->bind_result($result);
+		$existingUser->fetch();
+		
+		if ($result===1) {
+			$existingUser->close();
 			return "Username già registrato";
 		}
-
-		return null;		
+		else {
+			$existingUser->close();
+			return null;
+		}		
 	}
 
 	// function inserimento utente
-	function create_user($username, $password, $email, $trn_date) {
+	function createUser($username, $password, $email, $trn_date) {
 		global $con;
-		$query = "INSERT INTO users (username, password, email, trn_date)
-		VALUES ('$username', '".md5($password)."', '$email', '$trn_date')";
+		
+		// prepare registration query
+		$query = "INSERT INTO users (username, password, email, trn_date) VALUES (?,?,?,?)";
+		$registrationQuery = $con->prepare($query);
+		$registrationQuery->bind_param("ssss", $username, md5($password), $email, $trn_date);
+		
 
-		$result = mysqli_query($con,$query);
-
-		if($result) {
+		if($registrationQuery->execute()) {
 			return true;
 		}
 		else {
@@ -83,33 +100,27 @@
 		}
 	}
 
-	// esecuzione
 	function registration($username, $password, $cpassword, $email, $trn_date) {
-		if ($username != null && $password != null){
-			if (is_valid_username($username) === null) {
-				if (is_valid_email($email) === null) {
-					if (is_valid_passwords($password,$cpassword) === null) {
-						if (create_user($username, $password, $email, $trn_date)) {
+		if ($username != null && $password != null) {
+			if (isValidUsername($username) === null) {
+				if (isValidEmail($email) === null) {
+					if (isValidPassword($password, $cpassword) === null) {
+						if (createUser($username, $password, $email, $trn_date)) {
 							return null;
 						}
-						else {
+						else
 							return 'Errore durante la registrazione';
-						}
 					}
-					else {
-						return is_valid_passwords($password,$cpassword);
-					}
+					else
+						return isValidPassword($password,$cpassword);
 				}
-				else {
-					return is_valid_email($email);
-				}
+				else
+					return isValidEmail($email);
 			}
-			else {
-				return is_valid_username($username);
-			}
+			else
+				return isValidUsername($username);
 		}
-		else {
+		else
 			return "Tutti i campi sono obbligatori";
-		}
 	}
 ?>

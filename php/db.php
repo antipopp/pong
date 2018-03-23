@@ -5,9 +5,8 @@
 	$password = "";
 	$dbname = "pong";
 
-	$con = mysqli_connect($server, $username, $password, $dbname);
-	if (mysqli_connect_errno()) {
-	  echo "Errore di connessione: " . mysqli_connect_error();
+	$con = new mysqli($server, $username, $password, $dbname);
+	if ($con->connect_error) {
+		die("Errore di connessione: " . $con->connect_error);
 	}
-	
 ?>

@@ -13,31 +13,35 @@
 	function login($username, $password){   
 		if ($username != null && $password != null){
 			$check = authenticate($username, $password);
-			if ($check > 0) {
+			if ($check) {
 				session_start();
 				$_SESSION['username'] = $username;
 				return null;
 			}
+			else 		
+				return 'Username o password non validi';
 		} 
 		else
 			return 'Inserisci i dati';
-
-		return 'Username o password non validi';
 	}
 
 	function authenticate($username, $password) {
 		global $con;
 
-		mysql_real_escape_string($username);
-		mysql_real_escape_string($password);
-
-		$query = "SELECT 1 FROM users WHERE username='" . $username . "' AND password='" . md5($password) . "'";
-		$result = mysqli_query($con,$query);
-
-		if (mysqli_num_rows($result) === 0)
-			return -1;
-		else
-			return $result;
+		$query = "SELECT 1 FROM users WHERE username=? AND password=?";
+		$loginstmt = $con->prepare($query);
+		$loginstmt->bind_param('ss',$username,md5($password));
+		$loginstmt->execute();
+		$loginstmt->bind_result($result);
+		$loginstmt->fetch();
+		if ($result===1) {
+			$loginstmt->close();
+			return true;
+		}
+		else {
+			$loginstmt->close();
+			return false;
+		}
 	}
 
 ?>

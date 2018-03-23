@@ -3,10 +3,10 @@
 		<div class="wrapper">
 			<h1>Registrazione</h1>
 			<form>
-				<input type="text" id="username" placeholder="Username" /><br>
-				<input type="text" id="email" placeholder="Email" /><br>
-				<input type="password" id="password" placeholder="Password" /><br>
-				<input type="password" id="cpassword" placeholder="Conferma password" /><br><br>
+				<input type="text" id="regUsername" placeholder="Username" /><br>
+				<input type="text" id="regEmail" placeholder="Email" /><br>
+				<input type="password" id="regPassword" placeholder="Password" /><br>
+				<input type="password" id="regCPassword" placeholder="Conferma password" /><br><br>
 				<div id="regMessage" class="error"></div>
 				<button type="button" onclick="sendRegForm()" class="retroButton">Registrati</button>
 			</form>

@@ -1,12 +1,11 @@
 function sendRegForm() {
 	var req = new XMLHttpRequest();	
-	var username = document.getElementById('username').value;
-	var password = document.getElementById('password').value;
-	var email = document.getElementById('email').value;
-	var cpassword = document.getElementById('cpassword').value;
+	var username = document.getElementById('regUsername').value;
+	var password = document.getElementById('regPassword').value;
+	var email = document.getElementById('regEmail').value;
+	var cpassword = document.getElementById('regCPassword').value;
 
 	var creds = 'username='+username+'&password='+password+'&cpassword='+cpassword+'&email='+email;
-
 	req.onreadystatechange = function() {
 		if (req.readyState == 4 && req.status == 200) {
 			if (req.responseText == 'success') {
@@ -14,8 +13,10 @@ function sendRegForm() {
 				document.getElementById('login').style.display='flex';
 				document.getElementById('loginSuccess').innerHTML='Registrazione avvenuta con successo!';
 			}
-			else
+			else {
 				document.getElementById('regMessage').innerHTML = req.responseText;
+			}
+
 		}
 	}
 
