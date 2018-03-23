@@ -7,7 +7,7 @@
 				<input type="password" id="password" placeholder="Password" /><br><br>
 				<div id="loginMessage" class="error"></div>
 				<div id="loginSuccess" class="success"></div>
-				<button type="button" onclick="sendLoginForm()" class="retroButton">login</button>
+				<button type="submit" onclick="sendLoginForm()" class="retroButton">login</button>
 			</form>
 			<p>Non ti sei ancora registrato? <a href="#" onclick="modalSwitch('toReg')">Fallo qui!</a></p>
 		</div>
