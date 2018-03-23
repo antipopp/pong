@@ -1,7 +1,7 @@
 <div id="reg" class="modal">
 	<section class="retroBox animate">
 		<div class="wrapper">
-			<h1>Registrazione</h1>
+			<h3>Registrazione</h3>
 			<form>
 				<input type="text" id="regUsername" placeholder="Username" /><br>
 				<input type="text" id="regEmail" placeholder="Email" /><br>
@@ -10,8 +10,7 @@
 				<div id="regMessage" class="error"></div>
 				<button type="button" onclick="sendRegForm()" class="retroButton">Registrati</button>
 			</form>
-			<p>Sei già registrato? Effettua il <a href="#" onclick="document.getElementById('reg').style.display='none';document.getElementById('login').style.display='flex'">login</a>!</p>
+			<p>Sei già registrato? Effettua il <a href="#" onclick="modalSwitch('toLogin')">login</a>!</p>
 		</div>
 	</section>
 </div>
-<script type="text/javascript" src="/js/formAjax.js"></script>

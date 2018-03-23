@@ -13,3 +13,14 @@ window.onclick = function(event) {
 		board.style.display = "none";
 	}
 }
+
+function modalSwitch(whereTo) {
+	if (whereTo == 'toLogin') {
+		reg.style.display='none';
+		login.style.display='flex';
+	}
+	else if (whereTo == 'toReg') {
+		login.style.display='none';
+		reg.style.display='flex';
+	}
+}

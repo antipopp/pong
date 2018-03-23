@@ -9,8 +9,7 @@ function sendRegForm() {
 	req.onreadystatechange = function() {
 		if (req.readyState == 4 && req.status == 200) {
 			if (req.responseText == 'success') {
-				document.getElementById('reg').style.display='none';
-				document.getElementById('login').style.display='flex';
+				modalSwitch('toLogin');
 				document.getElementById('loginSuccess').innerHTML='Registrazione avvenuta con successo!';
 			}
 			else {

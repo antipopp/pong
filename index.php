@@ -20,5 +20,6 @@
 		</section>
 		<script src="/js/game.js"></script>
 		<script src="/js/modal.js"></script>
+		<script src="/js/formAjax.js"></script>
 	</body>
 </html>
