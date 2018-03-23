@@ -43,7 +43,10 @@ function sendLoginForm() {
 				location.reload();
 			}
 			else
-				document.getElementById('loginMessage').innerHTML = req.responseText;
+				var node = document.getElementById('loginMessage');
+				while (node.firstChild)
+					node.removeChild(node.firstChild);
+				node.appendChild(document.createTextNode(req.responseText));
 		}
 	}
 
