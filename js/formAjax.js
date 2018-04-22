@@ -25,7 +25,7 @@ function sendRegForm() {
 		}
 	}
 
-	req.open('POST', '../php/regChecks.php', true);
+	req.open('POST', 'php/regChecks.php', true);
 	req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	req.send(creds);
 }
@@ -51,7 +51,7 @@ function sendLoginForm() {
 		}
 	}
 
-	req.open('POST', '../php/loginChecks.php', true);
+	req.open('POST', 'php/loginChecks.php', true);
 	req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	req.send(creds);
 }

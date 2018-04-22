@@ -12,7 +12,7 @@
 				</thead>
 				<tbody>
 					<?php
-						require_once $_SERVER["DOCUMENT_ROOT"].'/php/db.php';
+						require_once 'db.php';
 						$results = mysqli_query($con,"SELECT * FROM leaderboard ORDER BY ratio DESC");
 						while($row = mysqli_fetch_assoc($results)) {
 					?>

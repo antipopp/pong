@@ -11,7 +11,7 @@
 	<body>
 		<header><h1><a href="index.php">PONG</a></h1></header>
 		<?php
-			include $_SERVER["DOCUMENT_ROOT"].'/php/navbar.php';
+			include 'php/navbar.php';
 		?>
 		<section class="retroBox">
 			<div class="wrapper gameContainer">

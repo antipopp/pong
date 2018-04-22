@@ -1,5 +1,5 @@
 <?php
-	require_once $_SERVER["DOCUMENT_ROOT"].'/php/db.php';
+	require_once 'db.php';
 	$username = $_POST['username'];
 	$email = $_POST['email'];
 	$password = $_POST['password'];

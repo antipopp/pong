@@ -28,7 +28,7 @@ function getData() {
 			playerData = JSON.parse(this.responseText)
 		}
 	};
-	req.open("GET", "../php/userEncode.php", true);
+	req.open("GET", "php/userEncode.php", true);
 	req.send(); 
 }
 
@@ -39,7 +39,7 @@ function sendData(data) {
 		if (this.readyState == 4 && this.status == 200)
 			console.log(this.responseText);
 	}
-	req.open("POST", "../php/userUpdate.php");
+	req.open("POST", "php/userUpdate.php");
 	req.setRequestHeader('Content-Type', 'application/json');
 	req.send(JSON.stringify(data));
 }
