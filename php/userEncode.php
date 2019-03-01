@@ -2,23 +2,30 @@
 	require_once 'db.php';
 	session_start();
 	if (!isset($_SESSION['username'])) {
-		$arr = array('user' => 'Ospite', 'win' => null, 'lost' => null, 'ratio' => null);
+		$arr = array('user' => 'Ospite', 'score' => 0);
 		echo json_encode($arr, JSON_PRETTY_PRINT);
 	}
 	else {
-		$query = "SELECT * FROM leaderboard WHERE user = '" . $_SESSION['username'] . "'";
-		$result = mysqli_query($con, $query);
+		$query = "SELECT username, max(score) as score
+				FROM scores 
+				WHERE username = '" . $_SESSION['username'] . "'";
+		$result = $con->query($query);
+		// $result->fetch();
+		// $result = mysqli_query($con, $query);
 
-		$rows = array();
-		while($r = mysqli_fetch_assoc($result)) {
-			$rows = array(
-				'user' => $r['user'],
-				'win' => $r['win'],
-      			'lost' => $r['lost'],
-      			'ratio' => $r['ratio']
-			);
-		}
+		$row = $result->fetch_array(MYSQLI_ASSOC);
+		$playerData = array(
+			'user' => $row['username'],
+			'score' => $row['score'] 
+		);
 
-		echo json_encode($rows, JSON_NUMERIC_CHECK);
+		// while($r = $result->fetch_array(MYSQLI_ASSOC)) {
+		// 	$rows = array(
+		// 		'user' => $r['username'],
+		// 		'score' => $r['score']
+		// 	);
+		// }
+		$con->close();
+		echo json_encode($playerData, JSON_NUMERIC_CHECK);
 	}
 ?>

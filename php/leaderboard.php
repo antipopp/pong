@@ -5,25 +5,23 @@
 				<thead>
 					<tr>
 						<td>User</td>
-						<td>Vittorie</td>
-						<td>Sconfitte</td>
-						<td>Rapporto</td>
+						<td>Punteggio</td>
 					</tr>
 				</thead>
 				<tbody>
 					<?php
-						require_once 'db.php';
-						$results = mysqli_query($con,"SELECT * FROM leaderboard ORDER BY ratio DESC");
+						require_once 'php/db.php';
+						$results = $con->query("SELECT * FROM scores ORDER BY score DESC");
 						while($row = mysqli_fetch_assoc($results)) {
 					?>
 						<tr>
-							<td><?php echo $row['user']?></td>
-							<td><?php echo $row['win']?></td>
-							<td><?php echo $row['lost']?></td>
-							<td><?php echo $row['ratio']?></td>
+							<td><?php echo $row['username']?></td>
+							<td><?php echo $row['score']?></td>
 						</tr>
 					<?php
 						}
+
+						$con->close();
 					?>
 					</tbody>
 				</table>

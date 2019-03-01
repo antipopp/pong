@@ -32,7 +32,9 @@
 }
 
 .score-label,
-.lives-label {
+.lives-label,
+.player-label,
+.topScore-label {
 	font-family: Arial, Helvetica, sans-serif;
 	color: #fff;
 	font-weight: bold;
@@ -43,6 +45,18 @@
 .lives-div {
 	position: absolute;
 	top: 40px;
+	left: 10px;
+}
+
+.player-div {
+	position: absolute;
+	top: 60px;
+	left: 10px;
+}
+
+.topScore-div {
+	position: absolute;
+	top: 80px;
 	left: 10px;
 }
 

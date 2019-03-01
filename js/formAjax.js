@@ -8,12 +8,14 @@ function sendRegForm() {
 	var creds = 'username='+username+'&password='+password+'&cpassword='+cpassword+'&email='+email;
 	req.onreadystatechange = function() {
 		if (req.readyState == 4 && req.status == 200) {
-			if (req.responseText == 'success') {
-				modalSwitch('toLogin');
-				var node = document.getElementById('loginSuccess');
-				while (node.firstChild)
-					node.removeChild(node.firstChild);
-				node.appendChild(document.createTextNode('Registrazione avvenuta con successo'));
+			if (req.responseText == true) {
+				setTimeout(function() {
+					modalSwitch('toLogin');
+					var node = document.getElementById('loginSuccess');
+					while (node.firstChild)
+						node.removeChild(node.firstChild);
+					node.appendChild(document.createTextNode('Registrazione avvenuta con successo'));
+				});
 			}
 			else {
 				var node = document.getElementById('regMessage');
@@ -39,14 +41,17 @@ function sendLoginForm() {
 
 	req.onreadystatechange = function() {
 		if (req.readyState == 4 && req.status == 200) {
-			if (req.responseText == 'success') {
-				location.reload();
+			if (req.responseText == true) {
+				setTimeout(function(){
+					window.location.reload();
+				  });
 			}
 			else {
 				var node = document.getElementById('loginMessage');
-				while (node.firstChild)
-					node.removeChild(node.firstChild);
-				node.appendChild(document.createTextNode(req.responseText));
+				// while (node.firstChild)
+				// 	node.removeChild(node.firstChild);
+				// node.appendChild(document.createTextNode(req.responseText));
+				node.innerHTML(req.responseText);
 			}
 		}
 	}

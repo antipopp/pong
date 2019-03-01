@@ -8,7 +8,7 @@
 
 	$regMessage = registration($username, $password, $cpassword, $email, $trn_date);
 	if($regMessage === null)
-		echo "success";
+		echo true;
 	else
 		echo $regMessage;
 	
@@ -87,9 +87,10 @@
 		global $con;
 		
 		// prepare registration query
+		$encPassword = md5($password);
 		$query = "INSERT INTO users (username, password, email, trn_date) VALUES (?,?,?,?)";
 		$registrationQuery = $con->prepare($query);
-		$registrationQuery->bind_param("ssss", $username, md5($password), $email, $trn_date);
+		$registrationQuery->bind_param("ssss", $username, $encPassword, $email, $trn_date);
 		
 
 		if($registrationQuery->execute()) {

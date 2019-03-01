@@ -6,7 +6,7 @@
 
 	$loginMessage = login($username, $password);
 	if($loginMessage === null)
-		echo "success";
+		echo true;
 	else
 		echo $loginMessage;
 
@@ -28,9 +28,10 @@
 	function authenticate($username, $password) {
 		global $con;
 
+		$encPassword = md5($password);
 		$query = "SELECT 1 FROM users WHERE username=? AND password=?";
 		$loginstmt = $con->prepare($query);
-		$loginstmt->bind_param('ss',$username,md5($password));
+		$loginstmt->bind_param('ss',$username,$encPassword);
 		$loginstmt->execute();
 		$loginstmt->bind_result($result);
 		$loginstmt->fetch();

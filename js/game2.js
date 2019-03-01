@@ -3,10 +3,15 @@ var playArea =
 	document.createElement('div'),
 	ship = document.createElement('div'),
 	gameOverText = document.createElement('h1'),
+	startScreenText = document.createElement('h1'),
 	scoreDiv = document.createElement('div'),
 	scoreLabel = document.createElement('p'),
 	livesDiv = document.createElement('div'),
 	livesLabel = document.createElement('p'),
+	playerDiv = document.createElement('div'),
+	playerLabel = document.createElement('p'),
+	topScoreDiv = document.createElement('div'),
+	topScoreLabel = document.createElement('p'),
 
 	// definizione variabili per la gestione del gioco
 	shipPos = {
@@ -33,11 +38,13 @@ var playArea =
 	enemyPos = {
 		x: 150,
 		y: -50
-	}
+	},
 	lives = 3,
-	gameOver = false
+	gameOver = false,
+	startScreen = true,
 	scoreText = 'Score: ',
 	score = 0,
+	topScoreText = 'Top Score: ',
 	livesText = 'Lives: ';
 
 // inizializzazione degli elementi di stile e posizionamento
@@ -61,6 +68,40 @@ document.getElementById('game').appendChild(livesDiv);
 livesDiv.classList.add('lives-div');
 livesDiv.appendChild(livesLabel);
 livesLabel.classList.add('lives-label');
+document.getElementById('game').appendChild(playerDiv);
+playerDiv.classList.add('player-div');
+playerDiv.appendChild(playerLabel);
+playerLabel.classList.add('player-label');
+document.getElementById('game').appendChild(topScoreDiv);
+topScoreDiv.classList.add('topScore-div');
+topScoreDiv.appendChild(topScoreLabel);
+topScoreLabel.classList.add('topScore-label');
+
+
+function getData() {
+	var req = new XMLHttpRequest();
+	req.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			var playerData = JSON.parse(this.responseText);
+			playerLabel.innerHTML = playerData.user;
+			topScoreLabel.innerHTML = topScoreText + playerData.score;
+		}
+	};
+	req.open("GET", "php/userEncode.php", true);
+	req.send(); 
+}
+
+function sendData(data) {
+	var req = new XMLHttpRequest();	
+	
+	req.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200)
+			console.log(this.responseText);
+	}
+	req.open("POST", "php/userUpdate.php");
+	req.setRequestHeader('Content-Type', 'application/json');
+	req.send(JSON.stringify(data));
+}
 
 
 function keyDown(e) {
@@ -195,7 +236,7 @@ function moveEnemies() {
 			enemies[i][1] = enemyPos.y;
 			enemies[i][0].style.top = enemies[i][1] + 'px';
 
-		// gestione della collisione tra la posizione dei nemici e quella del giocatore
+		// gestione della collisione tra la posizione dei nemici (eXYZ) e quella del giocatore (sXYZ)
 		} else if (sx >= ex && sx <= ew && sy >= ey && sy <= eh) {
 			checkLives();
 		} else if (sw <= ew && sw >= ex && sy >= ey && sy <= eh) {
@@ -225,6 +266,7 @@ function checkLives() {
 		playArea.appendChild(gameOverText);
 		gameOverText.classList.add('game-over');
 		gameOverText.innerHTML = 'Game Over';
+		sendData(score);
 	}
 	lives -= 1;
 }
@@ -256,7 +298,7 @@ function updateScore() {
 //	Semplice funzione che controlla se il browser è in grado di utilizzare il       //
 // 	metodo requestAnimationFrame, altrimenti utilizza setTimeout per gestire        //
 // 	l'animazione.                                                                   //
-// 																																									//
+// 																					//
 // ******************************************************************************** //
 window.requestAnimFrame = (function () {
 	return window.requestAnimationFrame ||
@@ -277,4 +319,5 @@ function loop() {
 	requestAnimFrame(loop);
 }
 
+getData();
 loop();
